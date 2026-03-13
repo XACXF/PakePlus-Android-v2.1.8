@@ -125,6 +125,11 @@
                     <h1 class="text-base sm:text-xl font-bold text-gray-800 truncate">游戏账号出租管理系统</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+                    <button onclick="showNotificationSettings()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 sm:px-4 py-2 rounded-lg flex items-center transition duration-300" title="通知设置">
+                        <svg class="icon mr-0 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                        <span class="hidden sm:inline">通知</span>
+                        <span class="sm:hidden">通知</span>
+                    </button>
                     <button onclick="openThemeModal()" class="bg-purple-600 hover:bg-purple-700 text-white px-2 sm:px-4 py-2 rounded-lg flex items-center transition duration-300">
                         <svg class="icon mr-0 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
                         <span class="hidden sm:inline">主题</span>
@@ -148,16 +153,18 @@
     <!-- 主要内容区 -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- 统计卡片折叠按钮 -->
-        <div class="flex justify-end mb-2 md:hidden">
-            <button onclick="toggleStats()" class="text-gray-500 hover:text-gray-700 p-2" id="toggleStatsBtn">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-gray-500 md:hidden">统计信息</span>
+            <button onclick="toggleStats()" class="text-gray-500 hover:text-gray-700 p-2 flex items-center gap-1" id="toggleStatsBtn">
+                <span class="text-sm hidden md:inline">展开统计</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="toggleStatsIcon">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
         </div>
 
         <!-- 统计卡片 -->
-        <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-8 transition-all duration-300">
+        <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-8 transition-all duration-300 hidden">
             <div class="stat-card bg-white rounded-xl shadow-md card-hover transition duration-300">
                 <div class="flex flex-col items-center justify-center h-full">
                     <div class="icon-wrapper p-4 bg-blue-100 rounded-full flex items-center justify-center">
@@ -291,21 +298,21 @@
     </main>
 
     <!-- 添加账号模态框 -->
-    <div id="addAccountModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 max-h-screen overflow-y-auto">
+    <div id="addAccountModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-2 sm:p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md sm:max-w-2xl mx-auto max-h-[95vh] sm:max-h-screen overflow-y-auto">
             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h3 class="text-lg font-semibold text-gray-800">添加新账号</h3>
                 <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
                     <svg class="icon icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form id="accountForm" class="px-6 py-4">
-                <div class="space-y-4">
+            <form id="accountForm" class="px-4 sm:px-6 py-4">
+                <div class="space-y-3">
                     <!-- 游戏名称 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">游戏名称</label>
-                        <select id="gameName" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                            <option value="">请选择游戏</option>
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">游戏名称</label>
+                        <select id="gameName" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" required>
+                            <option value="">请选择</option>
                             <option value="光·遇">光·遇</option>
                             <option value="英雄联盟">英雄联盟</option>
                             <option value="王者荣耀">王者荣耀</option>
@@ -313,60 +320,67 @@
                         </select>
                     </div>
                     <!-- 服务器/区服 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">服务器/区服</label>
-                        <input type="text" id="server" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="如：国服/微信区">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">服务器</label>
+                        <input type="text" id="server" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="如：国服">
                     </div>
                     <!-- 绑定手机 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">绑定手机</label>
-                        <input type="tel" id="phone" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="如：13800138000">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">绑定手机</label>
+                        <input type="tel" id="phone" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="手机号">
                     </div>
                     <!-- 红蜡烛 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">红蜡烛</label>
-                        <input type="number" id="redCandles" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0" min="0">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">红蜡烛</label>
+                        <input type="number" id="redCandles" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="0" min="0">
                     </div>
                     <!-- 白蜡烛 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">白蜡烛</label>
-                        <input type="number" id="whiteCandles" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0" min="0">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">白蜡烛</label>
+                        <input type="number" id="whiteCandles" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="0" min="0">
                     </div>
                     <!-- 爱心数量 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">爱心数量</label>
-                        <input type="number" id="heartsCount" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0" min="0">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">爱心</label>
+                        <input type="number" id="heartsCount" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="0" min="0">
                     </div>
-                    <!-- 日租金 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">日租金(元)</label>
-                        <input type="number" id="dailyPrice" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0" min="0" required>
+                    <!-- 租金 -->
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">租金</label>
+                        <input type="number" id="dailyPrice" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="金额" min="0" required>
+                        <select id="priceUnit" class="w-16 shrink-0 border border-gray-300 rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                            <option value="hour" selected>时</option>
+                            <option value="day">日</option>
+                            <option value="week">周</option>
+                            <option value="month">月</option>
+                            <option value="year">年</option>
+                        </select>
                     </div>
                     <!-- 押金 -->
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">押金(元)</label>
-                        <input type="number" id="deposit" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0" min="0">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0">押金</label>
+                        <input type="number" id="deposit" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="元" min="0">
                     </div>
                     <!-- 光遇特殊字段 -->
-                    <div id="skyFields" class="hidden space-y-4">
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                            <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">毕业进度</label>
-                            <input type="text" id="graduationProgress" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="如：全图毕业">
+                    <div id="skyFields" class="hidden space-y-3">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700 w-20 shrink-0">毕业进度</label>
+                            <input type="text" id="graduationProgress" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="如：全图毕业">
                         </div>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-                            <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0">复刻物品</label>
-                            <input type="text" id="replicaItems" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="如：蝙蝠斗、巫师帽">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700 w-20 shrink-0">复刻物品</label>
+                            <input type="text" id="replicaItems" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="如：蝙蝠斗">
                         </div>
                     </div>
                     <!-- 账号备注 -->
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <label class="text-sm font-medium text-gray-700 sm:w-24 shrink-0 pt-2">账号备注</label>
-                        <textarea id="remarks" rows="3" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="其他重要信息..."></textarea>
+                    <div class="flex items-start gap-2">
+                        <label class="text-sm font-medium text-gray-700 w-20 shrink-0 pt-2">备注</label>
+                        <textarea id="remarks" rows="2" class="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="其他信息..."></textarea>
                     </div>
                 </div>
-                <div class="mt-6 flex justify-end space-x-3">
-                    <button type="button" id="cancelBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300">取消</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">保存账号</button>
+                <div class="mt-6 flex gap-3">
+                    <button type="button" id="cancelBtn" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300 text-sm">取消</button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 text-sm">保存</button>
                 </div>
             </form>
         </div>
@@ -383,11 +397,11 @@
             </div>
             <div class="px-6 py-4">
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">租客昵称</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">租客昵称 <span class="text-gray-400 font-normal text-xs">（可选）</span></label>
                     <input type="text" id="renterName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="请输入租客昵称">
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">联系方式</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">联系方式 <span class="text-gray-400 font-normal text-xs">（可选）</span></label>
                     <input type="text" id="renterContact" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="手机号/微信">
                 </div>
                 <div class="mb-4">
@@ -566,5 +580,6 @@
     </div>
 
     <script src="app.js"></script>
+    <script src="notification.js"></script>
 </body>
 </html>
