@@ -59,6 +59,33 @@
             background-image: url(tp/bg1.jpg) !important;
             background-size: cover;
             background-position: center;
+            -webkit-transition: .3s all;
+            -moz-transition: .3s all;
+            -ms-transition: .3s all;
+            -o-transition: .3s all;
+            transition: .3s all;
+        }
+
+        /* 点击进入时背景虚化 */
+        .page-1.status2 .bg {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        }
+
+        /* 点击进入时标题区域也虚化 */
+        .page-1.status2 .title-section {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            -webkit-transition: .3s all;
+            -moz-transition: .3s all;
+            -ms-transition: .3s all;
+            -o-transition: .3s all;
+            transition: .3s all;
+        }
+
+        /* 点击进入时隐藏按钮 */
+        .page-1.status2 .btn-enter {
+            display: none;
         }
 
         /* 手机端适配 */
