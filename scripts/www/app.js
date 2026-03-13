@@ -265,10 +265,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 初始化统计卡片折叠状态
 function initStatsToggle() {
-    const isCollapsed = localStorage.getItem('stats_collapsed') === 'true';
-    if (isCollapsed) {
-        toggleStats(true);
+    const isExpanded = localStorage.getItem('stats_collapsed') === 'false';
+    if (isExpanded) {
+        // 用户之前展开过，保持展开状态
+        toggleStats(false);
     }
+    // 默认保持收起状态（HTML中已添加hidden类）
 }
 
 // 切换统计卡片显示/隐藏
@@ -384,6 +386,7 @@ function handleAddAccount(e) {
     const whiteCandles = parseInt(document.getElementById('whiteCandles').value) || 0;
     const heartsCount = parseInt(document.getElementById('heartsCount').value) || 0;
     const dailyPrice = parseFloat(document.getElementById('dailyPrice').value) || 0;
+    const priceUnit = document.getElementById('priceUnit').value;
     const deposit = parseFloat(document.getElementById('deposit').value) || 0;
     const remarks = document.getElementById('remarks').value.trim();
     
@@ -400,6 +403,7 @@ function handleAddAccount(e) {
             whiteCandles,
             heartsCount,
             dailyPrice,
+            priceUnit,
             deposit,
             remarks,
             status: oldAccount ? oldAccount.status : 'available',
@@ -420,6 +424,7 @@ function handleAddAccount(e) {
             whiteCandles,
             heartsCount,
             dailyPrice,
+            priceUnit,
             deposit,
             remarks,
             status: 'available',
@@ -601,7 +606,7 @@ function renderAccounts() {
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-white/70">价格:</span>
-                            <span class="font-bold text-yellow-300">¥${account.dailyPrice}/天</span>
+                            <span class="font-bold text-yellow-300">¥${account.dailyPrice}/${getPriceUnitText(account.priceUnit)}</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-white/70">押金:</span>
@@ -678,7 +683,7 @@ function renderAccounts() {
                     ` : ''}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div class="text-sm font-medium text-gray-900">¥${account.dailyPrice}/天</div>
+                    <div class="text-sm font-medium text-gray-900">¥${account.dailyPrice}/${getPriceUnitText(account.priceUnit)}</div>
                     <div class="text-sm text-gray-500">押金: ¥${account.deposit}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -714,6 +719,18 @@ function renderAccounts() {
     
     // 渲染完成后应用资料卡亮度
     applyCardBrightness();
+}
+
+// 获取租金单位显示文本
+function getPriceUnitText(unit) {
+    const unitMap = {
+        'hour': '时',
+        'day': '天',
+        'week': '周',
+        'month': '月',
+        'year': '年'
+    };
+    return unitMap[unit] || '时';
 }
 
 // 获取游戏颜色类
@@ -790,8 +807,9 @@ function confirmRent() {
     const unit = document.getElementById('rentUnit').value;
     const needHeartService = document.getElementById('needHeartService').checked;
     
-    if (!renterName || !renterContact || !duration) {
-        showNotification('请填写完整的出租信息', 'error');
+    // 只验证租赁时长，昵称和联系方式为可选
+    if (!duration || duration <= 0) {
+        showNotification('请填写租赁时长', 'error');
         return;
     }
     
@@ -869,6 +887,7 @@ function editAccount(accountId) {
     document.getElementById('whiteCandles').value = account.whiteCandles || '';
     document.getElementById('heartsCount').value = account.heartsCount || '';
     document.getElementById('dailyPrice').value = account.dailyPrice;
+    document.getElementById('priceUnit').value = account.priceUnit || 'hour';
     document.getElementById('deposit').value = account.deposit;
     document.getElementById('remarks').value = account.remarks;
     
